@@ -1,0 +1,25 @@
+{
+  "name": "mmenu-customer-web",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "cookie-session": "^2.0.0",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "hbs": "~4.0.1",
+    "http-errors": "~1.6.2",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1",
+    "morgan": "~1.9.0",
+    "node-fetch": "^3.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.0"
+  }
+}

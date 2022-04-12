@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Mmenu">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Mmenu">
+    <title>Mmenu</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/fonts.css?v=1.0.123">
+    <link rel="stylesheet" href="/css/layout.css?v=1.0.123">
+    <link rel="stylesheet" href="/css/controls.css">
+    <link rel="stylesheet" href="/css/pages.css?v=1.0.123">
+    <script>var shouldNotRegisterSession ={{#if shouldNotRegisterSession }} shouldNotRegisterSession {{else}} "0" {{/if}}</script>
+    <script src="/js/app.js"></script>
+  </head>
+  <body class="page-home">
+    
+    <!-- app-header -->
+    <div id="panel-header">
+      <nav id="nav-header">
+        <div class="header-left">
+        </div>
+        <div class="header-center">
+          <span> {{menuInfo.restaurantInfo.name}}- </span><span class="ten-ban">{{menuInfo.table.name}}</span>
+        </div>
+        <div class="header-right">
+          <a class="header-btn btn-book" href="orders" style="opacity:0.0;">
+            <img src="/icons/book.svg">
+            <span class="badge order-quantity">{{cart.totalOrderQuantity}}</span>
+          </a>
+          <a id="btn-menu-main" class="header-btn" href="#">
+            <img src="/icons/menu.svg">
+          </a>
+        </div>
+      </nav>
+
+      <div id="main-filter">
+        <div class="cb-danh-muc" data-toggle="modal" data-target="#modal-danhmuc">
+          <span class="value" key="">Danh mục</span>
+          <img class="icon" src="/icons/arrow-down.svg">
+        </div>
+        <div class="tbx-search">
+          <input type="text" class="input-search" placeholder="Tìm kiếm" />
+          <button class="submit btn-search"><img class="icon" src="/icons/search.svg"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- app-main -->
+    <div id="app-main" style="background-color:#fff;">
+      <div class="toast" style="left: 50%; position: absolute; transform: translate(-50%, 0px); z-index: 9999;">
+        <div class="toast-header">
+          Lưu ý
+        </div>
+        <div class="toast-body"></div>
+      </div>
+
+      <!-- slider -->
+      <div class="slider">
+        <div id="dish-banner-placeholder"></div> 
+        <div class="slider-navs"  id="slider-navs-placeholder"></div>
+      </div>
+
+      <!-- END slider -->
+
+      <div class="dish-list-placeholder"></div>
+    </div>
+
+    <!-- ############## absolute controls ############## -->
+    <div id="bottom-actions" class="dat-mon" style="height: 76px;">
+      <div class="flex">
+        <div style="width:14.9%;">
+          <a class="btn-book" href="carts">
+            <img src="/icons/maki_shop.svg">
+            <span class="badge cart-quantity">{{cart.totalItemCount}}</span>
+          </a>
+        </div>
+        <div style="width:38.8%;text-align: right;margin-top:-4px;">
+          <div class="total-order-paid" style="color:#E0463D;font-size:18px;">{{cart.totalOrderPaid}}</div>
+          <div>
+            <img class="btn-add" src="/icons/plus-bottom.svg" style="margin-right: 18px;padding: 4px;cursor: pointer;">
+            <span class="add-value total-card-paid">{{cart.totalCartPaid}}</span>
+          </div>
+        </div>
+        <div style="width:46.3%;">
+          <a class="btn btn-danger btn-datmon" href="carts">Đặt món</a>
+        </div>
+      </div>
+    </div> <!-- END bottom-actions -->
+
+    <!-- main-sidenav -->
+    <div id="sidenav-right" class="sidenav">
+      <a href="#" class="closebtn"><img src="/icons/close.svg"></a>
+      <div class="avatar"><img src="/images/avatar.png"></div>
+      <div class="username">Đăng nhập</div>
+      <hr style="margin-top:2px" />
+      <a class="menu-item" href="#"><img src="/icons/khuyen-mai.svg" width="21px"> Khuyến mãi</a>
+      {{!-- <a class="menu-item group" href="/main"><img src="/icons/thuc-don.svg" width="21px"> Thực đơn <img class="arrow" src="/icons/arrow-left.svg"></a> --}}
+      <div class="sub-menus">
+        <div id="sub-menu-placeholder"></div>
+      </div>
+      <a class="menu-item" href="#"><img src="/icons/lien-he.svg" width="22px"> Liên hệ</a>
+      <a id="side-nav-history" class="menu-item" href="history"><img src="/icons/lich-su.svg" width="22px"> Lịch sử</a>
+    </div>
+
+    <!-- Modal Category -->
+    <div class="modal fade" id="modal-danhmuc">
+      <div class="modal-dialog">
+        <div class="modal-content animate-bottom">
+          <div class="modal-body">
+            <div id="modal-category-placeholder"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modal-edit-quantity-dish-item">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="action-note">
+              <input type="number" class="input-quantity" style="text-align:center" placeholder="Số lượng đĩa" >
+            </div>
+            <div class="action-button">
+              <button type="button" class="btn btn-danger btn-ok" onClick="quantityConfirm(this)" style="width:100%;">Xác nhận</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      const defautlDishImage = '/icons/default_dish.svg';
+      let menuData;
+      let cartData;
+      let pathArray = window.location.href.split('/');
+      
+      //specify restaurantId and tableId
+      let restaurantId;
+      let tableId;
+
+      for(let i =1; i< pathArray.length ;i ++){
+        if(pathArray[i-1] == 'restaurants'){
+          restaurantId = pathArray[i];
+        }else if(pathArray[i-1] == 'tables'){
+          tableId = pathArray[i];
+        }
+      }
+      
+      //get quantity of given order from cartItems
+      function getOrderedQuantity(dishId, cartItems){
+
+        let orderedDish = cartItems.filter((element) => element.dishId.id === dishId);
+
+        if (orderedDish.length === 0) {
+          return {
+            dishQuantity: 0,
+            note: ""
+          };
+        } else {
+          return {
+            dishQuantity : orderedDish[0].quantity, 
+            note: orderedDish[0].note
+          };
+        }
+      }
+
+      // generate the list template
+      // return html template
+      var generateListTemplate = function(menuInfo, cartInfo){
+        var html = '';
+        const warning_dot =  `<img src="/icons/dot.svg" style="
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: 0px;
+        ">`;
+
+        menuInfo.dishesMenu.forEach(function(dishInfo) {
+          html += `<div class="dish-list">
+                    <a id="${dishInfo.category.id}"></a>
+                  <div class="dish-list-title">${dishInfo.category.name}</div>`;
+
+          dishInfo.dishes.forEach(function(dishes){
+            let {dishQuantity, note} = getOrderedQuantity(dishes.id, cartInfo.cartItems);
+            if(dishes.status == "available"){
+              html += `<div class="dish" id="${dishes.id}" ${!note ? '' : 'style="position: relative"' }>
+                      ${!note ? '' : warning_dot }
+                      <div class="dish-img">
+                        <a href="dish/${dishes.id}"><img class="img-list" src="${((dishes.images.length != 0) && (dishes.images[0] != '/app/assets/img/ic_warning_productcard_18only@2x.png?909d8e92875b02380b464d23f4e9d848')) ? dishes.images[0] : defautlDishImage }"></a>
+                        </div>
+                        <div class="dish-text">
+                          <div class="title"><a href="dish/${dishes.id}">${dishes.name}</a></div>
+                          <div class="price"> ${dishes.price.toLocaleString()}đ</div>
+                        </div>
+                        <div class="dish-amount dish-amount-menus">
+                          <img class="minus" dishId="${dishes.id}" src="/icons/minus.svg"><span dishId="${dishes.id}" onClick="openQuantityModal(this)" class="amount">
+                          ${!dishQuantity ? 0 : dishQuantity }
+                          </span><img class="plus" dishId="${dishes.id}" src="/icons/plus.svg">
+                        </div>
+                      </div>`;
+            }else{
+              html += `<div class="dish" id="${dishes.id}" ${!note ? '' : 'style="position: relative"' } style="align-items:center;">
+                        ${!note ? '' : warning_dot }
+                        <div class="dish-img">
+                          <a href="dish/${dishes.id}"><img class="img-list" src="${((dishes.images.length != 0) && (dishes.images[0] != '/app/assets/img/ic_warning_productcard_18only@2x.png?909d8e92875b02380b464d23f4e9d848')) ? dishes.images[0] : defautlDishImage }"></a>
+                          </div>
+                          <div class="dish-text">
+                            <div class="title"><a href="dish/${dishes.id}">${dishes.name}</a></div>
+                            <div class="price"> ${dishes.price.toLocaleString()}đ</div>
+                          </div>
+                          <div class="dish-amount dish-amount-menus">
+                            <img class="minus" dishId="${dishes.id}" src="/icons/minus.svg"><span dishId="${dishes.id}" onClick="openQuantityModal(this)" class="amount">
+                            ${!dishQuantity ? 0 : dishQuantity }
+                            </span><img class="plus" dishId="${dishes.id}" src="/icons/plus.svg">
+                          </div>
+                          <div style="
+                          position: absolute;
+                          width: 100%;
+                          height: 100%;
+                          background-color: gray;
+                          opacity: 0.5;
+                          border-radius:8px;
+                          "></div>
+                          <div style="
+                          position: absolute;
+                          background: white;
+                          border-radius: 5px;
+                          width: 100px;
+                          height: 42px;
+                          text-align: center;
+                          border: 2px solid black;
+                          font-size: 20px;
+                          left: 0;
+                          right: 0;
+                          margin-left: auto;
+                          margin-right: auto;
+                          padding-top:4px;
+                            ">Đã hết</div>
+                        </div>`;
+              
+            }
+          }); 
+          html += '</div>';
+        });
+
+        return html;
+      };
+
+      var generateBanner = function(menuInfo, cartInfo){
+        let html = '';
+        let dishQuantity
+        html += `<div class="slider-items">`;
+        menuInfo.imageBanners.forEach(function(imageBanner){
+          if(imageBanner.status == "available"){
+            dishQuantity = getOrderedQuantity(imageBanner._id, cartInfo.cartItems).dishQuantity;
+            html += `<div class="dish vertical"> <!-- dish 1 -->
+                                <div class="dish-img">
+                                  <a href="dish/${imageBanner._id}" ><img src="${((imageBanner.images.length != 0) && (imageBanner.images[0] != "/app/assets/img/ic_warning_productcard_18only@2x.png?909d8e92875b02380b464d23f4e9d848"))?imageBanner.images[0] : defautlDishImage }"></a>
+                                </div>
+                                <div class="dish-text">
+                                  <div class="title"><a href="dish/${imageBanner._id}">${imageBanner.name}</a></div>
+                                  <div class="price" >${imageBanner.price.toLocaleString()}đ</div>
+                                </div>
+                                <div class="dish-amount dish-amount-menus-banner">
+                                  <img class="minus" dishId="${imageBanner._id}" src="/icons/minus.svg"><span class="amount" dishId="${imageBanner._id}">${!dishQuantity ? 0 : dishQuantity}</span><img class="plus" dishId="${imageBanner._id}" src="/icons/plus.svg">
+                                </div>
+                              </div>`;
+          }
+         
+        });
+
+        html += '</div>';
+      
+        return html;
+      };
+
+      var generateBannerNav = function(menuInfo){
+        let html = '';
+        let leng = menuInfo.imageBanners.length;
+        menuInfo.imageBanners.forEach(function(imageBanner){
+          if(imageBanner.status == "unavailable"){
+            leng -= 1;
+          }
+        });
+
+        for(let i =0; i< leng; i++){
+          
+          html+=    `<a class="slider-nav ${i==Math.floor(leng/2) ? "active":""}" href="#${i}"></a>`;
+        };
+        return html;
+      }
+
+      var generateSubMenu = function(menuInfo){
+        var html = '';
+        menuInfo.dishesMenu.forEach(function(dishMenu){
+          html += `<a class="menu-item" href="menus#${dishMenu.category.id}">${dishMenu.category.name}</a>`;
+        });
+        return html;
+      };
+
+      var generateModalCategory = function(menuInfo){
+        var html = '';
+        menuInfo.dishesMenu.forEach(function(dishMenu){
+          html += `<a class="menu-item" href="menus#${dishMenu.category.id}" categoryid="${dishMenu.category.id}">${dishMenu.category.name}</a>`;
+        });
+        return html; 
+      };
+
+      function updateBannerQuantity(imageBanners, cartInfo){
+        imageBanners.forEach(function(imageBanner){
+          $(`span.amount[dishId=${imageBanner._id}]`).html(getOrderedQuantity(imageBanner._id, cartInfo.cartItems).dishQuantity);
+        });
+      }
+
+      function updateListQuantity(menuInfo, cartInfo){
+        menuInfo.dishesMenu.forEach(function(dishInfo){
+
+          dishInfo.dishes.forEach(function(dish){
+            $(`span.amount[dishId=${dish._id}]`).html(getOrderedQuantity(dish._id, cartInfo.cartItems).dishQuantity);
+          });
+
+        });
+        
+      }
+
+      function updateQuantityAndPrice(cartInfo){
+        $('.total-order-paid').html(cartInfo.totalOrderPaid.toLocaleString());
+        $('.total-card-paid').html(cartInfo.totalCartPaid.toLocaleString());
+        $('.cart-quantity').html(cartInfo.totalItemCount);
+        $('.order-quantity').html(cartInfo.totalOrderQuantity);
+
+        const orderTag =  $('.header-btn.btn-book');
+        if(cartInfo.totalOrderQuantity == 0){
+          orderTag.attr("href", "#");
+          orderTag.css('opacity', '0.0');
+        }else{
+          orderTag.attr("href", "orders");
+          orderTag.css('opacity', '1.0');
+        }
+      };
+
+      // update the list dishes
+      /*
+      Update the list dishes
+      if isSearch == true, get the menu data
+      else 
+      */
+      function updateListDish(isSearch){
+        if(!window.localStorage.getItem("jwtToken")) return;
+
+        var dishList = $('.dish-list-placeholder');
+        var dishBanner = $('#dish-banner-placeholder');
+        var sliderNavs = $('#slider-navs-placeholder');
+
+        var cartInfo; 
+        
+        $.ajax({
+          type: 'GET',
+          url: `${baseUrl}/restaurants/${restaurantId}/client/cart`,
+          beforeSend: function(request){
+            request.setRequestHeader("Content-Type", 'application/json');
+            request.setRequestHeader("appid", 'mmenu-customer');
+            request.setRequestHeader("authorization", `Bearer ${window.localStorage.getItem("jwtToken")}`);
+          },
+          success: function(data){
+            cartInfo = data.result;
+            if(menuData === undefined || isSearch === true){
+
+              $.ajax({
+                type: 'GET',
+                url: `${baseUrl}/restaurants/${restaurantId}/menus?searchName=${$(".input-search").val()}&tableId=${tableId}`,
+                beforeSend: function(request){
+                  request.setRequestHeader("Content-Type", 'application/json');
+                  request.setRequestHeader("appid", 'mmenu-customer');
+                  request.setRequestHeader("authorization", `Bearer ${window.localStorage.getItem("jwtToken")}`);
+                },
+                success: function(data){
+                  menuData = data.result;
+                  var subMenu = $('#sub-menu-placeholder');
+                  var modalCategories = $('#modal-category-placeholder');
+
+                  dishBanner.html(generateBanner(menuData, cartInfo));
+                  sliderNavs.html(generateBannerNav(menuData));
+
+                  dishList.html(generateListTemplate(menuData, cartInfo));
+                  updateQuantityAndPrice(cartInfo);
+
+                  //update sub menus categories
+                  subMenu.html(generateSubMenu(menuData));
+                  modalCategories.html(generateModalCategory(menuData));
+                },
+              });
+            }else{
+              //dishBanner.html(generateBanner(menuData, cartInfo));
+              dishList.html(generateListTemplate(menuData, cartInfo));
+              updateBannerQuantity(menuData.imageBanners, cartInfo);
+              updateQuantityAndPrice(cartInfo);
+            }
+          }
+        });
+      }
+
+      updateListDish(false);
+
+      //search by click
+      $(document).on('click', '.btn-search', function (e) {
+        e.preventDefault();
+        $('.cb-danh-muc>.value').html("Danh mục");
+        updateListDish(true);
+      });
+
+      //search by enter
+      $(document).on('keyup', '.input-search', function (e) {
+          e.preventDefault();
+          if (e.key === 'Enter' || e.keyCode === 13) {
+            $('.cb-danh-muc>.value').html("Danh mục");
+            updateListDish(true);
+          }
+      });
+
+      //add and subtract amount of dish
+      $(document).on('click', '.dish-amount-menus img', function (e) {
+        e.preventDefault();
+        let isPlus = $(this).hasClass('plus');
+        let isMinus = $(this).hasClass('minus');
+        if (!isPlus && !isMinus) return;
+
+        let eleDish = $(this).closest('.dish');
+        if (!eleDish?.length) eleDish = $(this).closest('.dish-info');
+
+        // Amount
+        let eleAmount = $(eleDish).find('.amount');
+        let amount = eleAmount.text();
+        amount = parseInt(amount);
+        amount += isPlus ? 1 : -1;
+        if (amount < 0) amount = 0;
+        //eleAmount.html(amount);
+
+        if (changeIn_modal_edit_order_dish_item(eleDish, amount)) return;
+
+        // Price
+        let elePrice = $(eleDish).find('.price');
+        if (!elePrice) return;
+        let price = elePrice.text();
+        price = price.replace('đ', '').replaceAll(',', '').replaceAll('.', '');
+        price = parseInt(price);
+
+        $.post('cart', {
+            dishId: this.getAttribute("dishId"),
+            quantity: amount
+        },
+            function (data, status) {
+              cartInfo = data.cartResponse.result;
+              updateListQuantity(menuData,cartInfo);
+              updateQuantityAndPrice(cartInfo);
+            }
+        );
+    });
+
+    $(document).on('click', '.dish-amount-menus-banner img', function (e) {
+        e.preventDefault();
+        let isPlus = $(this).hasClass('plus');
+        let isMinus = $(this).hasClass('minus');
+        if (!isPlus && !isMinus) return;
+
+        let eleDish = $(this).closest('.dish');
+        if (!eleDish?.length) eleDish = $(this).closest('.dish-info');
+
+        // Amount
+        let eleAmount = $(eleDish).find('.amount');
+        let amount = eleAmount.text();
+        amount = parseInt(amount);
+        amount += isPlus ? 1 : -1;
+        if (amount < 0) amount = 0;
+
+        if (changeIn_modal_edit_order_dish_item(eleDish, amount)) return;
+
+        // Price
+        let elePrice = $(eleDish).find('.price');
+        if (!elePrice) return;
+        let price = elePrice.text();
+        price = price.replace('đ', '').replaceAll(',', '').replaceAll('.', '');
+        price = parseInt(price);
+
+        $.post('cart', {
+            dishId: this.getAttribute("dishId"),
+            quantity: amount
+        },
+            function (data, status) {
+              cartInfo = data.cartResponse.result;
+              updateListQuantity(menuData,cartInfo);
+              updateQuantityAndPrice(cartInfo);
+            }
+        );
+    });
+
+    $(document).on('focusout', '#sidenav-right', function(e){
+      $(this).css('width', 0);
+    });
+
+    //modal edit quantity dish
+    function openQuantityModal(spanQuantity){
+      const modal = $("#modal-edit-quantity-dish-item");
+      modal.modal(); // show the modal
+      modal.attr("dish-id", spanQuantity.getAttribute("dishId"));
+      let convertedSpan = $(spanQuantity);
+
+      let inputQuantity = modal.find("input");
+      inputQuantity.val(parseInt(convertedSpan.text().trim()));
+    }
+
+    // confirm the amount of dishes that customer choose and add to cart
+    function quantityConfirm(element){  
+      const modal = $("#modal-edit-quantity-dish-item");
+      const inputQuantity = modal.find('.input-quantity');
+      
+      if(inputQuantity.val()){
+        
+        $.post('cart', {
+          dishId: modal.attr("dish-id"),
+          quantity: inputQuantity.val().trim()
+        },
+          function (data, status) {
+            modal.modal("hide");
+            updateListDish(false);
+          }
+        );
+      } else{
+        createToast("Vui lòng nhập số lượng");
+      }
+    }
+
+    function createToast(message){
+      $('.toast > .toast-body').html(message);
+      $('.toast').toast({delay: 2000});
+      $('.toast').toast('show');
+    }
+
+    </script>
+  </body>
+</html>

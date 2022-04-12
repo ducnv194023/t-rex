@@ -1,0 +1,475 @@
+/* page-cart-confirm */
+.page-cart-confirm #nav-header {
+    height: 57px;
+    background-color: #f8f8f8;
+    box-shadow: inset 0 -4px 4px rgb(0 0 0 / 2%);
+}
+.page-cart-confirm #app-main {
+    margin-top: 57px;
+    padding-top: 20px;
+    box-shadow: none;
+    padding-bottom: 224px;
+}
+.page-cart-confirm .dish-img {
+    height: 88px;
+}
+
+.page-cart-confirm .dish .price {
+    margin-top: 2px;
+}
+
+.page-cart-confirm .dish .dish-amount {
+    bottom: 28px;
+}
+
+.page-cart-confirm #bottom-actions {
+    height: 224px
+}
+.page-cart-confirm #bottom-actions>.flex .btn {
+    font-size: 18px;
+    font-weight: 500;
+}
+.page-cart-confirm #bottom-actions>.flex>div {
+    padding-left: 4px;
+    padding-right: 4px;
+}
+.page-cart-confirm #bottom-actions .tong-tien-chua-ck {
+    margin-top: 10px;
+    margin-bottom: 8px;
+}
+.page-cart-confirm #bottom-actions .tong-tien {
+    margin-bottom: 27px;
+}
+
+
+
+/* page-order-list */
+.page-order-list {
+    background-color:#f1f1f1;
+    font-weight: 500;
+    padding: 0px;
+}
+
+.page-order-list, body {
+    padding: 0px;
+}
+
+.page-order-list #app-main {
+    margin-top: 52px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+
+.page-order-list #app-main .dishs {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    font-size: 14px;
+    font-weight: 500;
+}
+.page-order-list #app-main .dishs>.title {
+    margin-bottom: 14px;
+}
+
+.page-order-list #app-main .dishs .btn-cancel-order {
+    color:#f00;
+    text-decoration: underline;
+    float: right;
+}
+
+
+.page-order-list #app-main .dishs .dish-item {
+    height: 80px;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 9px;
+}
+.page-order-list #app-main .dishs .dish-item .text {
+    padding-right: 8px;
+    margin-bottom: 9px;
+}
+.page-order-list #app-main .dishs .dish-item .dish-price {
+    float: right;
+    font-weight: 600;
+}
+
+.page-order-list #app-main .dishs .dish-item .flow {
+    position: relative;
+    padding-right: 8px;
+}
+.page-order-list #app-main .dishs .dish-item .flow .icon {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background-repeat: no-repeat;
+}
+.page-order-list #app-main .dishs .dish-item .flow .line {
+    display: inline-block;
+    width: 52px;
+    height: 7px;
+    background-image: url('../icons/dishFlow-line-off.svg');
+    background-repeat: no-repeat;
+}
+
+.page-order-list #app-main .dishs .dish-item .flow .step1.icon {
+    background-image: url('../icons/dishFlow-1-on.svg');
+}
+.page-order-list #app-main .dishs .dish-item .flow .step2.icon {
+    background-image: url('../icons/dishFlow-2-off.svg');
+}
+.page-order-list #app-main .dishs .dish-item .flow .step3.icon {
+    background-image: url('../icons/dishFlow-3-off.svg');
+}
+.page-order-list #app-main .dishs .dish-item .flow .step4.icon {
+    background-image: url('../icons/dishFlow-4-off.svg');
+}
+
+.page-order-list #app-main .dishs .dish-item .flow.on2 .step2.line {
+    background-image: url('../icons/dishFlow-line-on.svg');
+}
+.page-order-list #app-main .dishs .dish-item .flow.on2 .step2.icon {
+    background-image: url('../icons/dishFlow-2-on.svg');
+}
+.page-order-list #app-main .dishs .dish-item .flow.on3 .step3.line {
+    background-image: url('../icons/dishFlow-line-on.svg');
+}
+.page-order-list #app-main .dishs .dish-item .flow.on3 .step3.icon {
+    background-image: url('../icons/dishFlow-3-on.svg');
+}
+.page-order-list #app-main .dishs .dish-item .flow.on4 .step4.line {
+    background-image: url('../icons/dishFlow-line-on.svg');
+}
+.page-order-list #app-main .dishs .dish-item .flow.on4 .step4.flex {
+    background-image: url('../icons/dishFlow-4-on.svg');
+}
+.page-order-list #app-main .dishs .dish-item .flow .btn-edit {
+    background-color: #FF303C;
+    border-radius: 8px;
+    font-size: 11px;
+    padding: 1px 7px;
+    color: #fff;
+    text-decoration: none;
+}
+.page-order-list #app-main .dishs .dish-item .flow .btn-edit img {
+    margin-right: 5px;
+}
+.page-order-list #app-main .dishs .dish-item .flow .actions {
+    position: absolute;
+    top: -3px;
+    right: 8px;
+}
+
+.page-order-list #app-main .dishs .order-details .dish-item  .row{
+    margin-left: 0px;
+}
+
+.page-order-list #app-main .dishs .order-details .dish-item  .name{
+    width: 66%;
+    overflow: hidden;
+    white-space: nowrap;
+    overflow-x: scroll;
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.page-order-list #app-main .dishs .order-details .dish-item  .name::-webkit-scrollbar {
+    display: none;
+}
+
+.page-order-list #app-main .dishs .order-details .dish-item  .amount{
+    width: 7%;
+} 
+
+.page-order-list #app-main .dishs .order-details .dish-item  .dish-price{
+    width: 25%;
+}
+
+/* .page-pay */
+.page-pay #app-main {
+    margin-top: 52px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 110px;
+    background-color: #f8f8f8;
+    font-size: 14px;
+}
+
+.page-pay #app-main .bill {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px;
+}
+.page-pay #app-main .bill .dish-items {
+    padding: 0 8px 0 3px;
+    font-weight: 600;
+}
+.page-pay #app-main .bill .dish-item {
+    margin-bottom: 2px;
+    margin-left: inherit;
+    padding: inherit;
+}
+.page-pay #app-main .bill .dish-item .amount {
+    color: #f00;
+    width: 5%;
+    margin-right: 8px;
+}
+.page-pay #app-main .bill .dish-item .name {
+    font-weight: 500;
+    width: 70%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.page-pay #app-main .bill .dish-item .price {
+    float: right;
+    width: 22%;
+    flex-grow: 1;
+    text-align: right;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.page-pay #app-main span.right {
+    font-weight: 600;
+}
+.page-pay #app-main .bill .bill-action-item {
+    width: 100%;
+    display: inline-block;
+    height: 32px;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    padding: 5px 13px;
+    color: #000;
+    text-decoration: none;
+    margin-bottom: 7px;
+}
+.page-pay #app-main .bill .bill-action-item:hover {
+    background-color: #f8f8f8;
+}
+
+.page-pay #app-main .sum {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 6px;
+}
+
+.page-pay #app-main .tong-thanh-toan {
+    font-size: 18px;
+    color:#f00;
+}
+
+/* .page-promotion */
+.page-promotion #app-main {
+    margin-top: 52px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 110px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+}
+
+.page-promotion #app-main .km-box {
+    margin-bottom: 16px;
+}
+
+.page-promotion #app-main .km-box>.title {
+    margin-bottom: 8px;
+}
+
+.page-promotion #app-main .km-box>.flex {
+    height: 108px;
+    background-color: #fff;
+    border-radius: 8px;
+}
+.page-promotion #app-main .km-box .image img {
+    object-fit: cover;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.page-promotion #app-main .km-box .infos {
+    padding-top: 8px;
+    padding-left: 15px;
+    width: calc(100% - 88px);
+    position: relative;
+}
+.page-promotion #app-main .km-box .infos .name {
+    font-size:16px;
+    font-weight:600;
+}
+.page-promotion #app-main .km-box .infos .content {
+    font-size:14px;
+    margin-bottom: 6px;
+}
+.page-promotion #app-main .km-box .infos .expired {
+    font-size:12px;
+    color:#3F5BD7;
+}
+.page-promotion #app-main .km-box .check-cell {
+    width: 35px;
+    position: absolute;
+    right: 0;
+    top: 50px;
+}
+
+/* page-pay-method */
+
+.page-pay-method #panel-header {
+    border-bottom: 0;
+    background-color: #f8f8f8;
+}
+.page-pay-method #app-main {
+    box-shadow: none;
+    background-color: #f8f8f8;
+    margin-top: 72px;
+}
+
+.page-pay-method .pay-method-item {
+    height: 68px;
+    background-color: #fff;
+    color: #000;
+    box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    padding-left: 20px;
+    padding-top: 8px;
+    margin-bottom: 15px;
+    display: block;
+    text-decoration: none;
+}
+
+.page-pay-method .pay-method-item .icon {
+    width: 52px;
+    height: 52px;
+    margin-right: 16px;
+}
+.page-pay-method .pay-method-item .arrow {
+    height: 18px;
+    float: right;
+    margin-top: 17px;
+    margin-right: 25px;
+}
+
+/* page-bill */
+.page-bill #panel-header {
+    border-bottom: 0;
+    background-color: #f8f8f8;
+}
+.page-bill #app-main {
+    box-shadow: none;
+    background-color: #f8f8f8;
+    margin-top: 52px;
+    padding-top: 7px;
+}
+.page-bill .bill-panel {
+    background-color: #fff;
+    padding: 10px 20px 20px 20px;
+    font-weight: 500;
+    font-size: 16px;
+}
+.page-bill .bill-panel .restaurant {
+    text-align: center;
+    padding-bottom: 5px;
+}
+.page-bill .bill-panel .restaurant .name {
+    font-size: 22px;
+}
+.page-bill .bill-panel .restaurant .address {
+    font-size: 16px;
+}
+.page-bill .bill-panel .customer {
+    font-size: 14px;
+    position: relative;
+    padding-top: 10px;
+}
+.page-bill .bill-panel .customer .name {
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+.page-bill .bill-panel .customer .phone {
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+.page-bill .bill-panel .customer .time {
+    margin-bottom: 2px;
+}
+.page-bill .bill-panel .customer .diem {
+    margin-bottom: 2px;
+}
+
+
+.page-bill .bill-panel .price {
+    float: right;
+    font-weight: 600;
+}
+
+.page-bill .tong-tien {
+    font-size: 20px;
+}
+.page-bill hr {
+    margin-top: 12px;
+    margin-bottom: 15px;
+}
+
+.page-bill .dish-item {
+    margin-bottom: 2px;
+}
+.page-bill .dish-item .amount {
+    font-weight: 600;
+    margin-right: 9px;
+}
+
+.page-bill .sum-1>div {
+    margin-bottom: 2px;
+}
+
+.page-bill #bottom-actions {
+    white-space: nowrap;
+}
+.page-bill #bottom-actions>div {
+    display: inline-block;
+    width: 50%;
+}
+
+.page-bill #app-main .dish-items .dish-item .amount {
+    color: #f00;
+    width: 5%;
+    margin-right: 8px;
+}
+.page-bill #app-main .dish-items .dish-item .name {
+    font-weight: 500;
+    width: 70%;
+}
+.page-bill #app-main .dish-items .dish-item .price {
+    float: right;
+    width: 20%;
+}
+
+.page-history #app-main {
+    margin-top: 200px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+}
+
+.page-history #app-main .history-list-placeholder .dish .time{
+    padding-right: 15px;
+}
+
+
+.page-history #app-main .history-list-placeholder .dish .dish-text{
+    padding-left: 12px;
+    padding-top: 8px;
+    height: 80px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.page-history #app-main .history-list-placeholder .dish .time{
+    text-align: end;
+    margin-left: auto;
+}

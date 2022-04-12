@@ -1,0 +1,108 @@
+stages:
+  - docker-build
+  - deploy-dev
+  - deploy-staging
+  - deploy-production
+
+docker-build-image:
+  image: docker:latest
+  stage: docker-build
+  services:
+    - docker:dind
+  before_script:
+    - apk add --no-cache curl jq python3 py3-pip
+    - pip install awscli
+    - aws ecr get-login-password | docker login --username AWS --password-stdin $DOCKER_REGISTRY
+    - aws --version
+    - docker info
+    - docker --version    
+  variables:
+    DOCKER_REGISTRY: 633454557521.dkr.ecr.ap-southeast-1.amazonaws.com
+    AWS_DEFAULT_REGION: ap-southeast-1
+    APP_NAME: mmenu-customer-web
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_DRIVER: overlay2
+    TAG_LATEST: latest
+    TAG_DEV: dev
+    TAG_STAGING: staging
+  script:
+    - echo "$CI_COMMIT_BRANCH"
+    - version=`date '+%Y%m%d_%H%M%S'`
+    - |
+      if [[ "$CI_COMMIT_BRANCH" == "develop" ]]; then
+        echo "Running on develop"
+        docker build -t $APP_NAME .
+        # ecr repo
+        docker tag $APP_NAME $DOCKER_REGISTRY/$APP_NAME:$TAG_DEV
+        docker push "$DOCKER_REGISTRY/$APP_NAME:$TAG_DEV"
+      fi
+      if [[ "$CI_COMMIT_BRANCH" == "staging" ]]; then
+        echo "Running on staging. Replace Api to staging"
+        sed -i "s/devapi.mmenu.io/stagingapi.mmenu.io/g" utils/apiUtils.js
+        sed -i "s/devapi.mmenu.io/stagingapi.mmenu.io/g" public/js/app.js
+        head -20 utils/apiUtils.js
+        head -20 public/js/app.js
+
+        docker build -t $APP_NAME .
+        # ecr repo
+        docker tag $APP_NAME $DOCKER_REGISTRY/$APP_NAME:$TAG_STAGING
+        docker push "$DOCKER_REGISTRY/$APP_NAME:$TAG_STAGING"
+      fi
+
+      if [[ "$CI_COMMIT_BRANCH" == "main" ]]; then
+        echo "Running on production. Replace Api to production"
+        sed -i "s/devapi.mmenu.io/api.mmenu.io/g" utils/apiUtils.js
+        sed -i "s/devapi.mmenu.io/api.mmenu.io/g" public/js/app.js
+        head -20 utils/apiUtils.js
+        head -20 public/js/app.js
+        
+        docker build -t $APP_NAME .
+        # ecr repo
+        docker tag $APP_NAME $DOCKER_REGISTRY/$APP_NAME:$TAG_LATEST
+        docker tag $APP_NAME $DOCKER_REGISTRY/$APP_NAME:$TAG_LATEST$version
+        docker push "$DOCKER_REGISTRY/$APP_NAME:$TAG_LATEST"
+        docker push "$DOCKER_REGISTRY/$APP_NAME:$TAG_LATEST$version"
+      fi
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == "main"'
+  tags:
+    - docker
+
+deploy-image-dev:
+  image: 'registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest'
+  stage: deploy-dev
+  variables:
+    APP_NAME: mmenu-customer-web
+    CI_AWS_ECS_CLUSTER: mmenu-dev
+    CI_AWS_ECS_SERVICE: mmenu-customer-web-dev
+  script:
+    - echo "$CI_COMMIT_BRANCH"
+    - aws ecs update-service --cluster  $CI_AWS_ECS_CLUSTER --service $CI_AWS_ECS_SERVICE --force-new-deployment
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "develop"'
+
+deploy-image-staging:
+  image: 'registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest'
+  stage: deploy-staging
+  variables:
+    APP_NAME: mmenu-customer-web
+    CI_AWS_ECS_CLUSTER: mmenu-
+    CI_AWS_ECS_SERVICE: mmenu-customer-web-staging
+  script:
+    - echo "$CI_COMMIT_BRANCH"
+    - aws ecs update-service --cluster  $CI_AWS_ECS_CLUSTER --service $CI_AWS_ECS_SERVICE --force-new-deployment
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "staging"'
+
+deploy-image-production:
+  image: 'registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest'
+  stage: deploy-production
+  variables:
+    APP_NAME: mmenu-customer-web
+    CI_AWS_ECS_CLUSTER: mmenu-prod
+    CI_AWS_ECS_SERVICE: mmenu-customer-web-prod
+  script:
+    - echo "$CI_COMMIT_BRANCH"
+    - aws ecs update-service --cluster  $CI_AWS_ECS_CLUSTER --service $CI_AWS_ECS_SERVICE --force-new-deployment
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'

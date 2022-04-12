@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html style="background-color: #f8f8f8;">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Mmenu">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Mmenu">
+  <!-- <meta name="theme-color" content="#999999" class="next-head" />
+    <meta name="msapplication-TileColor" content="#999999" class="next-head" /> -->
+  <title>Mmenu</title>
+   <link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css' rel='stylesheet'>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/font-awesome.min.css">
+  <script src="/js/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+  <script src="/js/popper.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/css/fonts.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/controls.css">
+  <link rel="stylesheet" href="/css/pages.css">
+  <script>var shouldNotRegisterSession = {{ shouldNotRegisterSession }}</script>
+  <script src="/js/app.js"></script>
+</head>
+
+<body class='page-history'>
+  <!-- app-header -->
+  <div id="panel-header">
+    <nav id="nav-header">
+      <div class="header-left">
+        <a id="btn-back" class="header-btn" href="menus">
+          <img src="/icons/back.svg" >
+        </a>
+      </div>
+      <div class="header-center">
+        <span>Lịch sử</span>
+      </div>
+      <div class="header-right">
+      </div>
+    </nav>
+
+    <div id="main-filter">
+      <div class="order-history-search">
+        <input type="text" class="input-search" placeholder="Tìm kiếm" />
+        <button class="submit btn-search" onClick="searchByWords()"><img class="icon" src="/icons/search.svg"></button>
+      </div>
+    </div>
+
+    <div id="main-filter">
+      <div class="tbx-search-from-date">
+        <input type="text" class="input-search" placeholder="Từ" disabled id="datepickerFrom"/>
+        <button class="submit btn-search" onClick="selectStartDate()"><img class="icon" src="/icons/calendar.svg"></button>
+      </div>
+      <div class="tbx-search-to-date">
+        <input type="text" class="input-search" placeholder="Đến" disabled id="datepickerTo"/>
+        <button class="submit btn-search" onClick="selectEndDate()" ><img class="icon" src="/icons/calendar.svg"></button>
+      </div>
+    </div>
+
+  </div>
+  <div id = "app-main">
+      <div id="history-list-placeholder"> </div>
+  </div>
+  </div>
+  <script type="text/javascript">
+    const today = new Date();
+    let fromDate  = new Date(today.getFullYear(), today.getMonth(), 1);
+    let toDate = today;
+    const user = JSON.parse(window.localStorage.getItem("user"));
+
+    function formatDateDDMMYYYY(date) {
+      return ('0' + date.getDate()).slice(-2) + '/'
+              + ('0' + (date.getMonth()+1)).slice(-2) + '/'
+              + date.getFullYear();
+    }
+
+    function formatDateYYYYMMDD(date) {
+      return date.getFullYear()+ '-' + ('0' + (date.getMonth()+1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2)
+    }
+
+    function bindFromDateField() {
+      const dateString = formatDateDDMMYYYY(fromDate);
+      $('#main-filter .tbx-search-from-date .input-search').attr("placeholder", dateString);
+    }
+
+    function bindToDateField() {
+      const dateString = formatDateDDMMYYYY(toDate);
+      $('#main-filter .tbx-search-to-date .input-search').attr("placeholder", dateString);
+    }
+
+    function updateHistoryList() {
+      const historyList = $('#history-list-placeholder');
+      const fromQuery = formatDateYYYYMMDD(fromDate);
+      const toQuery = formatDateYYYYMMDD(toDate);
+      const textQuery = $('.input-search').val();
+      console.log(textQuery);
+      $.ajax({
+        type: 'GET',
+        url: `${baseUrl}/users/${user.id}/order-history?from=${fromQuery}&to=${toQuery}&textQuery=${textQuery}`,
+        beforeSend: function(request){
+            request.setRequestHeader("Content-Type", 'application/json');
+            request.setRequestHeader("appid", 'mmenu-customer');
+            request.setRequestHeader("authorization", `Bearer ${window.localStorage.getItem("jwtToken")}`);
+          },
+        success: function(data){
+          if(data.code < 300) {
+            var html = ''
+            var customerBaseUrl = window.location.href.replace(/(customer).*/, '$1');
+            const result = data.result;
+            result.forEach((orderHistory) => {
+              html += `<div class = 'dish' id = ${orderHistory.orderSessionId}>
+                <div class = "dish-img">
+                  <a href = '${customerBaseUrl}/restaurants/${orderHistory.restaurantId}/orders/${orderHistory.orderSessionId}/invoice'/>
+                    <img class="img-list" src="${(orderHistory.image && orderHistory.image.length != 0)? orderHistory.image : '/icons/default_dish.svg' }">
+                </div>
+                  <div class="dish-text" style="position:relative">
+                    <div class="title">${orderHistory.name}</a></div>
+                    <div class="price">${orderHistory.paymentAmount}đ</a></div>
+                  </div>
+                  <div class="time" style="font-size:12px;color:#3F5BD7;position:absolute;right:0px;top:-2px">
+                    ${timeConverter(orderHistory.createdAt)}
+                  </div>
+                </a>
+              </div>`;
+            });
+            $("#history-list-placeholder").html(html);
+          }
+        }
+      })
+    }
+
+    bindFromDateField();
+    bindToDateField();
+    updateHistoryList();
+
+    $( function() {
+      $( "#datepickerFrom" ).datepicker({
+        dateFormat: 'dd/mm/yy'
+      });
+    } );
+
+    $( function() {
+      $( "#datepickerTo" ).datepicker({
+        dateFormat: 'dd/mm/yy'
+      });
+    } );
+
+    $('#datepickerFrom').change(function() {
+      let startDate = $(this).datepicker('getDate');
+      $("#datepickerTo").datepicker("option", "minDate", startDate);
+      fromDate = startDate;
+      updateHistoryList();
+    });
+
+    $('#datepickerTo').change(function() {
+      let endDate = $(this).datepicker('getDate');
+      $("#datepickerFrom").datepicker("option", "maxDate", endDate);
+      toDate = endDate;
+      updateHistoryList();
+    });
+
+    function selectStartDate(){
+      $( "#datepickerFrom" ).datepicker("show");
+
+    }
+
+    function selectEndDate(){
+      $( "#datepickerTo" ).datepicker("show");
+    }
+
+    function searchByWords(){
+      updateHistoryList();
+    }
+
+    function timeConverter(date){
+      let temp = new Date(date);
+      return temp.getHours() +":" + temp.getMinutes() + ", "+ formatDateDDMMYYYY(temp);
+    }
+    
+  </script>
+</body>
+
+</html>

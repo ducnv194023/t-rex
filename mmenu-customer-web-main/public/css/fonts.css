@@ -1,0 +1,34 @@
+@font-face { 
+  font-family: 'SVNGilroy';
+  src: url('../fonts/SVN-Gilroy-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face { 
+  font-family: 'SVNGilroyBold';
+  src: url('../fonts/SVN-Gilroy-Bold.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face { 
+  font-family: 'Montserrat';
+  src: url('../fonts/Montserrat-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face { 
+  font-family: 'MontserratBold';
+  src: url('../fonts/Montserrat-Bold.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face { 
+  font-family: 'MontserratItalic';
+  src: url('../fonts/Montserrat-Italic.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}

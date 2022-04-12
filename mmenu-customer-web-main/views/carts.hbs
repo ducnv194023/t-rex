@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Mmenu">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Mmenu">
+  <!-- <meta name="theme-color" content="#999999" class="next-head" />
+    <meta name="msapplication-TileColor" content="#999999" class="next-head" /> -->
+  <title>Mmenu</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/font-awesome.min.css">
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/popper.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/css/fonts.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/controls.css">
+  <link rel="stylesheet" href="/css/pages.css">
+  <script>var shouldNotRegisterSession = {{ shouldNotRegisterSession }}</script>
+  <script src="/js/app.js"></script>
+</head>
+
+<body class="page-cart-confirm">
+
+  </div>
+  <!-- app-header -->
+  <div id="panel-header">
+    <nav id="nav-header">
+      <div class="header-left">
+        <a id="btn-back" class="header-btn" href="menus">
+          <img src="/icons/back.svg">
+        </a>
+      </div>
+      <div class="header-center">
+        <span>Món đã chọn</span>
+      </div>
+      <div class="header-right">
+
+      </div>
+    </nav>
+  </div>
+
+  <!-- app-main -->
+  <div id="app-main" style="background-color:#fff; position: relative ">
+    <div class="toast" style="left: 50%; position: absolute; transform: translate(-50%, 0px); z-index: 9999;">
+      <div class="toast-header">
+        Lưu ý
+      </div>
+      <div class="toast-body"></div>
+    </div>
+    <!-- dish list -->
+    <div class="dish-list">
+      {{#each cartConfirm.cartItems}}
+      <div class="dish">
+        <!-- dish 0 -->
+        <div class="dish-img">
+          <a href="dish/{{dishId.id}}"><img class="img-carts" src="{{dishId.images}}"></a>
+        </div>
+        <div class="dish-text">
+          <div class="title"><a href="dish/{{dishId.id}}">{{dishId.name}}</a></div>
+          <div class="price">{{#thousandFormatter dishId.price}}{{/thousandFormatter}}</div>
+          <div class="note">
+            {{#if note}}
+            <span class="span-note"> {{note}} </span>
+            {{else}}
+            <a href="dish/{{dishId.id}}" class="link-note"><img src="/icons/cart-note.svg">Ghi chú</a>
+            {{/if}}
+
+          </div>
+        </div>
+        <div class="dish-amount dish-amount-carts">
+          <img class="minus" dishId="{{dishId.id}}" src="/icons/minus.svg"><span class="amount">{{quantity}}</span><img
+            class="plus" dishId="{{dishId.id}}" src="/icons/plus.svg">
+        </div>
+      </div>
+      {{/each}}
+
+
+    </div> <!-- END dish list -->
+
+  </div>
+
+  <!-- ############## absolute controls ############## -->
+  <div id="bottom-actions" style="font-size: 14px;">
+    <div class="tong-tien-chua-ck">Tổng số tiền<span style="float: right;">{{#thousandFormatter
+        cartConfirm.totalCartPaid}}{{/thousandFormatter}}</span></div>
+    <div class="chiet-khau">Chiết khấu<span style="float: right;">0đ</span></div>
+    <hr>
+    <div class="tong-tien">Tổng số tiền<span style="float: right;font-size:18px;">{{#thousandFormatter
+        cartConfirm.totalCartPaid}}{{/thousandFormatter}}</span></div>
+    <div class="flex">
+      <div style="width:50%;padding-right:8px">
+        <button type="button" class="btn btn-white btn-more" style="display: block; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">
+          Gọi thêm món
+        </button>
+      </div>
+      <div style="width:50%;padding-left:8px;">
+        <button type="button" class="btn btn-danger btn-ok btn-dong-y" data-toggle="modal"
+          data-target="#modal-cart-confirm">Đồng ý</button>
+      </div>
+    </div>
+  </div> <!-- END bottom-actions -->
+
+  <!-- Modal Danh mục -->
+  <div class="modal fade" id="modal-cart-confirm">
+    <div class="modal-dialog">
+      <div class="modal-content animate-bottom">
+        <div class="modal-body">
+          <div style="opacity: .7;">Vui lòng nhập thông tin dưới đây để tiếp tục order</div>
+          <div><input type="text" id="input-ten" placeholder="Họ tên"></div>
+          <div><input type="text" id="input-sdt" type="number" placeholder="Số điện thoại"></div>
+          <div class="flex" style="margin-top:41px;">
+            <div style="width:50%;padding-right:8px">
+              <button type="button" class="btn btn-white btn-boqua" data-dismiss="modal">Bỏ qua</button>
+            </div>
+            <div style="width:50%;padding-left:8px;display:-webkit-inline-box;-webkit-box-pack:center;-webkit-box-align:center;">
+              <a type="button" class="btn btn-danger btn-ok btn-xacnhan-user"
+                style="display: block; overflow: hidden; white-space: nowrap" href="orders">Xác nhận</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(document).on('click', '.btn-boqua', function (e) {
+      e.preventDefault();
+      let pathArray = window.location.href.split('/');
+      pathArray.pop();
+      var newPathname = pathArray.join('/');
+      $.post('checkout',
+        function (data, status) {
+          if (data.code !== 200) {
+            $('.toast > .toast-body').html(data.message);
+            $('.toast').toast({ delay: 2000 });
+            $('.toast').toast('show');
+          } else {
+            window.location.replace(newPathname + "/orders");
+          }
+        }
+      );
+    });
+
+    $(document).on('click', '.btn-xacnhan-user', function (e) {
+      e.preventDefault();
+
+      let pathArray = window.location.href.split('/');
+      pathArray.pop();
+      let newPathname = pathArray.join('/');
+      let inputTen = $(document).find("#input-ten");
+      let inputSdt = $(document).find("#input-sdt");
+
+      let body = {};
+      if (inputTen.val()) {
+        body['userName'] = inputTen.val();
+      }
+      if (inputSdt.val()) {
+        body['userPhoneNumber'] = inputSdt.val();
+      }
+
+      $.post('checkout',
+        body,
+        function (data, status) {
+          if (data.code !== 200) {
+            $('.toast > .toast-body').html(data.message);
+            $('.toast').toast({ delay: 2000 });
+            $('.toast').toast('show');
+          } else {
+            if (!isRegister) {
+              window.localStorage.setItem("USER_FORM_REGISTER_FORM_DISPLAY", true);
+            }
+            window.location.replace(newPathname + "/orders");
+          }
+        }
+      );
+    });
+
+    $(document).on('click', '.dish-amount-carts img', function (e) {
+      e.preventDefault();
+      let isPlus = $(this).hasClass('plus');
+      let isMinus = $(this).hasClass('minus');
+      if (!isPlus && !isMinus) return;
+
+      let eleDish = $(this).closest('.dish');
+      if (!eleDish?.length) eleDish = $(this).closest('.dish-info');
+
+      // Amount
+      let eleAmount = $(eleDish).find('.amount');
+      let amount = eleAmount.text();
+      amount = parseInt(amount);
+      amount += isPlus ? 1 : -1;
+      if (amount < 0) amount = 0;
+
+      if (changeIn_modal_edit_order_dish_item(eleDish, amount)) return;
+
+      // Price
+      let elePrice = $(eleDish).find('.price');
+      if (!elePrice) return;
+      let price = elePrice.text();
+      price = price.replace('đ', '').replaceAll(',', '').replaceAll('.', '');
+      price = parseInt(price);
+      let thisButton = $(this);
+      $.ajax({
+        type: "POST",
+        url: "cart",
+        data: { dishId: this.getAttribute("dishId"), quantity: amount },
+        success: function (data) {
+          if (data.message === "success") {
+            eleAmount.html(amount);
+            if (amount == 0) { thisButton.parent().parent().remove(); };
+            $('.tong-tien-chua-ck').find('span').html(data.cartResponse.result.totalCartPaid);
+            $('.tong-tien').find('span').html(data.cartResponse.result.totalCartPaid);
+          }
+        },
+      });
+    });
+
+    const isRegister = JSON.parse(window.localStorage.getItem("USER_FORM_REGISTER_FORM_DISPLAY"));
+    if (isRegister) {
+      $('.btn-dong-y').removeAttr('data-target');
+      $('.btn-dong-y').addClass('btn-boqua');
+    }
+
+    $(document).on('click', '.btn-more', function (e) {
+      let pathArray = window.location.href.split('/');
+      pathArray.pop();
+      var newPathname = pathArray.join('/');
+      window.location.replace(newPathname + "/menus");
+    })
+  </script>
+</body>
+
+</html>

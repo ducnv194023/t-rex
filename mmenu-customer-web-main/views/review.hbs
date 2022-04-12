@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html style="background-color: #f8f8f8;">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Mmenu">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Mmenu">
+  <!-- <meta name="theme-color" content="#999999" class="next-head" />
+    <meta name="msapplication-TileColor" content="#999999" class="next-head" /> -->
+  <title>Mmenu</title>
+
+  <link rel="stylesheet"
+    href="/css/bootstrap.min.css">
+  <link rel="stylesheet"
+    href="/css/font-awesome.min.css">
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/popper.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <link rel="stylesheet"
+    href="/css/fonts.css?v=1.0.123">
+  <link rel="stylesheet"
+    href="/css/layout.css?v=1.0.123">
+  <link rel="stylesheet"
+    href="/css/controls.css?v=1.0.123">
+  <link rel="stylesheet"
+    href="/css/pages.css?v=1.0.124">
+  <script>var shouldNotRegisterSession = {{#if shouldNotRegisterSession }} {{shouldNotRegisterSession}} {{else}} "0" {{/if}}</script>
+  <script src="/js/app.js"></script>
+</head>
+
+<body class="page-review">
+    <div id="panel-header">
+      <nav id="nav-header">
+        <div class="header-left">
+        </div>
+        <div class="header-center">
+        </div>
+        <div class="header-right">
+          <a class="header-btn btn-book" href="#">
+          </a>
+          <a id="btn-menu-main" class="header-btn" href="#">
+            <img src="/icons/menu.svg">
+          </a>
+        </div>
+      </nav>
+      </div>
+    <div id="sidenav-right" class="sidenav">
+      <a href="#" class="closebtn"><img src="/icons/close.svg"></a>
+      <div class="avatar"><img src="/images/avatar.png"></div>
+      <div class="username">Đăng nhập</div>
+      <hr style="margin-top:2px" />
+      <a class="menu-item" href="#"><img src="/icons/khuyen-mai.svg" width="21px"> Khuyến mãi</a>
+      <a id = "menu-side-nav" class="menu-item"><img src="/icons/thuc-don.svg" width="21px"> Thực đơn </a>
+      <div class="sub-menus">
+        <div id="sub-menu-placeholder"></div>
+      </div>
+      <a class="menu-item" href="#"><img src="/icons/lien-he.svg" width="22px"> Liên hệ</a>
+      <a id="side-nav-history" class="menu-item"><img src="/icons/lich-su.svg" width="22px"> Lịch sử</a>
+    </div>
+  <!-- app-main -->
+  <div id="app-main" style="text-align: center;box-shadow: none;">
+    <img src="/icons/big-logo.svg">
+    <div style="padding-top: 30px;"><p><b>Bạn đã gửi yêu cầu thanh toàn thành công. Hệ thống sẽ tự động chuyển trạng thái trong 5 giây</b><p></div>
+  </div>
+
+  <script>
+    let reviewStar = 0;
+    let pathArray = window.location.href.split('/');
+      
+    //specify restaurantId and sessionId
+    let restaurantId;
+    let orderSessionId;
+    let tableId;
+
+    for(let i =1; i< pathArray.length ;i ++){
+      if(pathArray[i-1] == 'restaurants'){
+        restaurantId = pathArray[i];
+      }else if(pathArray[i-1] == 'orders'){
+        orderSessionId = pathArray[i];
+      }else if(pathArray[i-1] == 'tables'){
+        tableId = pathArray[i];
+      }
+    }
+
+    $(".star").click(function(){
+      $(".star>img").attr("src", "/icons/ant-design_star-outlined.svg");
+      reviewStar = parseInt($(this).attr("id"));
+      for(let i = 1; i <= reviewStar; i++  ){
+        $(`#${i}>img`).attr("src", "/icons/ant-design_star-filled.svg");
+      }
+    });
+
+    $("#menu-side-nav").click(function(e){
+      e.preventDefault();
+      const pathArray = window.location.href.replace(/(orders).*/, '$1');
+      window.location.href = (pathArray.replace('orders', 'menus'));
+    });
+
+    $("#side-nav-history").click(function(e){
+      e.preventDefault();
+      const pathArray = window.location.href.replace(/(orders).*/, '$1');
+      window.location.href = (pathArray.replace('orders', 'history'));
+    });
+
+    function checkStatus(){
+      $.ajax({
+        type: 'GET',
+        url: `${baseUrl}/restaurants/${restaurantId}/order-sessions/${orderSessionId}/status`,
+        beforeSend: function(request){
+          request.setRequestHeader("Content-Type", 'application/json');
+          request.setRequestHeader("appid", 'mmenu-customer');
+          request.setRequestHeader("authorization", `Bearer ${window.localStorage.getItem("jwtToken")}`);
+        },
+        success: function(res){
+          if(res.result == "paid"){
+            const pathArray = window.location.href.replace(/(customer).*/, '$1');
+            window.location.href = (pathArray+`/restaurants/${restaurantId}/tables/${tableId}/orders/${orderSessionId}/bill`);
+          }
+        }
+
+      });
+
+    };
+
+    function backToMenu(){
+      const pathArray = window.location.href.replace(/(orders).*/, '$1');
+      window.location.href = (pathArray.replace('orders', 'menus'));
+    }
+
+    //setInterval(checkStatus, 10000);
+    setInterval(backToMenu, 5000);
+
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html style="background-color: #f8f8f8;">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Mmenu">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Mmenu">
+  <!-- <meta name="theme-color" content="#999999" class="next-head" />
+    <meta name="msapplication-TileColor" content="#999999" class="next-head" /> -->
+  <title>Mmenu</title>
+
+  <link rel="stylesheet"
+    href="/css/bootstrap.min.css">
+  <link rel="stylesheet"
+    href="/css/font-awesome.min.css">
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/popper.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <link rel="stylesheet"
+    href="/css/fonts.css">
+  <link rel="stylesheet"
+    href="/css/layout.css">
+  <link rel="stylesheet"
+    href="/css/controls.css">
+  <link rel="stylesheet"
+    href="/css/pages.css">
+  <script>var shouldNotRegisterSession = {{shouldNotRegisterSession}}</script>
+  <script src="/js/app.js"></script>
+</head>
+
+<body class="page-pay">
+  <!-- app-header -->
+  <div id="panel-header">
+    <nav id="nav-header">
+      <div class="header-left">
+        <a id="btn-back" class="header-btn">
+          <img src="/icons/back.svg">
+        </a>
+      </div>
+      <div class="header-center">
+        <span>Thanh toán</span>
+      </div>
+      <div class="header-right">
+
+      </div>
+    </nav>
+  </div>
+
+  <!-- app-main -->
+  <div id="app-main">
+    <div class="khach-hang-tag">
+      <div class="title">Thông tin khách hàng</div>
+      <div class="flex">
+        <div class="avatar"><img
+            src="/icons/avatar.svg" width="24px"
+            height="24px"></div>
+        <div class="flex infos">
+          <div style="width:calc(100% - 127px);">
+            <div class="name" style="font-size:16px;font-weight:600;">{{#if orderSession.representativeId.name }}{{orderSession.representativeId.name}}{{else}}Thực khách{{/if}}</div>
+            <div class="phone" style="font-weight:600;margin:3px 0 7px 0;"> {{orderSession.representativeId.phone}}</div>
+            <div>
+              <div><span>Số người: <span class="so-nguoi">{{orderSession.numberOfCustomers}}</span></span></div>
+              <div>
+                <span >Bàn: {{#each orderSession.tableIds}}
+                <span class="ban">{{name}}</span>
+                            {{/each}}</span>
+              </div>
+            </div>
+          </div>
+          <div style="width: 120px;position: absolute;right: 0;">
+            <div class="time" style="font-size:12px;color:#3F5BD7;">{{timeConverter orderSession.createdAt}}</div>
+            {{!-- <div style="font-size:12px;margin:10px 0 8px 0;">NV: <span class="ten-nv"></span></div> --}}
+            {{#if orderSession.totalPoint}}<div>Điểm: <span class="diem">{{orderSession.totalPoint}}</span></div>{{/if}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bill">
+      <div class="dish-items">
+        {{#each orderSession.orderDetails}}
+          {{#each dishOrder}}
+          <div class="dish-item row">
+            <div class="amount column">{{quantity}}x</div><div class="name column">{{dishId.name}}</div><div
+              class="price">{{#thousandFormatter totalPrice}}{{/thousandFormatter}}</div>
+          </div>
+          {{/each}}
+        {{/each}}
+
+      </div>
+      <hr> <!-- hr -->
+      <div><span>Tổng</span><span class="right tong-truc-tiep">{{#thousandFormatter orderSession.pretaxPaymentAmount}}{{/thousandFormatter}}</span></div>
+      {{!-- <div><span>Điểm</span><span class="right diem">{{#thousandFormatter orderSession.earningPointAmount}}{{/thousandFormatter}} điểm</span></div> --}}
+      <div><span>Chiết khấu</span><span class="right chiet-khau discount-amount">{{#thousandFormatter orderSession.discountAmount}}{{/thousandFormatter}}đ</span></div>
+      <div><span>Thuế VAT</span><span class="right chiet-khau tax-payment">{{#thousandFormatter orderSession.taxPaymentAmount}}{{/thousandFormatter}}đ</span></div>
+      <hr style="border-width: 2px;"> <!-- hr -->
+      
+      <div><a class="bill-action-item" href="#" onClick="removeActive()" data-toggle="modal" data-target="#modal-tip-nv"><span class="tien-tip">Tip nhân viên</span><span
+            class="right"><img
+              src="/icons/three-dots.svg"></span></a>
+      </div>
+    </div>
+
+    <div class="sum">
+      {{!-- <div style="margin-bottom: 6px;"><span>Trung bình/người</span><span
+          class="right trung-binh-nguoi">{{#thousandFormatter orderSession.averagePaymentAmount}}{{/thousandFormatter}}đ</span></div> --}}
+      <div><span>Tổng tiền thanh toán</span><span class="right tong-thanh-toan">{{#thousandFormatter orderSession.paymentAmount}}{{/thousandFormatter}}đ</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ############## absolute controls ############## -->
+  <div id="bottom-actions" class="dat-mon" style="height: 97px;">
+    <div style="width:100%;padding:5px 8px 5px 8px;">
+      <a class="btn btn-danger btn-ptthanhtoan" style="width:100%;height:44px;">Thanh toán</a>
+    </div>
+  </div> <!-- END bottom-actions -->
+
+  <!-- Modal Tip nhân viên -->
+  <div class="modal fade modal-bottom" id="modal-tip-nv">
+    <div class="modal-dialog">
+      <div class="modal-content animate-bottom">
+        <div class="modal-body">
+          <div class="tipvals">
+            <span class="tipval" value="20000">20.000đ</span>
+            <span class="tipval" value="30000">30.000đ</span>
+            <span class="tipval" value="40000">40.000đ</span>
+            <span class="tipval active" value="50000">50.000đ</span>
+          </div>
+          <div class="tbx-tipval">
+            <input type="number" class="input-tip"  onfocus="removeActive()" placeholder="Nhập số tiền khác" />
+          </div>
+          <div class="action-button" style="margin-top:35px;">
+            <button type="button" onclick="addTip()" class="btn btn-danger btn-ok btn-add-tip" style="width:100%;height:44px;">Áp dụng</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</body> <!-- END modal -->
+
+<!-- Modal Chọn người tiêu điểm -->
+<div class="modal fade modal-bottom" id="modal-chon-tieu-diem">
+  <div class="modal-dialog">
+    <div class="modal-content animate-bottom">
+      <div class="modal-body">
+        <div class="inputs flex">
+          <div class="cb-nguoi-tieu-diem">
+            <span class="value" key="">Chọn người tiêu điểm</span>
+            <img class="icon"
+              src="/icons/arrow-down-red.svg"
+              style="float: right;margin-right: 6px;margin-top: 6px;">
+          </div>
+          <div class="tbx-so-diem">
+            <input type="number" placeholder="Số điểm" />
+          </div>
+        </div>
+        <div class="action-button" style="margin-top:35px;">
+          <button type="button"  class="btn btn-danger btn-ok" style="width:100%;height:44px;">Áp dụng</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</body> <!-- END modal -->
+
+<!-- Modal Danh sách người tiêu điểm -->
+<div class="modal fade modal-bottom" id="modal-list-nguoi-tieu-diem">
+  <div class="modal-dialog">
+    <div class="modal-content animate-bottom">
+      <div class="modal-body">
+        <a class="nguoi-tieu-diem-item" href="#">Người Tiêu Điểm 01</a>
+        <a class="nguoi-tieu-diem-item" href="#">Người Tiêu Điểm 02</a>
+        <a class="nguoi-tieu-diem-item" href="#">Người Tiêu Điểm 03</a>
+        <a class="nguoi-tieu-diem-item" href="#">Người Tiêu Điểm 04</a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+  var menuData;
+  var pathArray = window.location.href.split('/');
+  
+  //specify restaurantId and tableId
+  var restaurantId;
+  var tableId;
+  var orderSessionId;
+
+  for(let i =1; i< pathArray.length ;i ++){
+    if(pathArray[i-1] == 'restaurants'){
+      restaurantId = pathArray[i];
+    }else if(pathArray[i-1] == 'tables'){
+      tableId = pathArray[i];
+    }else if(pathArray[i-1] == 'orders'){
+      orderSessionId = pathArray[i];
+    }
+  }
+
+  function bindPaymentButton() {
+    $('.btn-ptthanhtoan').on('click', function(e){
+      $.post('pay-request',
+        {
+          status: "payRequested",
+        },
+        function(data, status){
+          const pathArray = window.location.href.replace(/(customer).*/, '$1');
+          window.location.href = (pathArray+`/restaurants/${restaurantId}/tables/${tableId}/orders/${orderSessionId}/review`);
+        }
+      );
+    });
+  }
+
+  //update info 
+  function updateInfo(orderSession){
+    $(".right.tong-truc-tiep").text(orderSession.pretaxPaymentAmount);
+    $(".right.diem").text(orderSession.earningPointAmount);
+    $(".right.chiet-khau.discount-amount").text(orderSession.discountAmount);
+    $(".right.chiet-khau.tax-payment").text(Math.round(orderSession.taxPaymentAmount).toLocaleString());
+    $(".right.trung-binh-nguoi").text(Math.round(orderSession.averagePaymentAmount).toLocaleString() + "đ");
+    $(".right.tong-thanh-toan").text(Math.round(orderSession.paymentAmount).toLocaleString() + "đ");
+
+  }
+
+  function addTip(){
+    var tipAmount;
+    if($(".tipval.active").attr("value")){
+      tipAmount = $(".tipval.active").attr("value");
+    }else{
+      tipAmount = $(".input-tip").val();
+    }
+
+    $.post('tip', {
+        tipAmount: tipAmount,
+    },
+      function (data) {
+        
+        if(data.result.tipAmount != 0){
+          $('.tien-tip').text(`Tip: ${data.result.tipAmount}`);
+        }else{
+          $('.tien-tip').text("Tip nhân viên");
+        }
+
+        updateInfo(data.result);
+      }
+    );
+
+    $('#modal-tip-nv').modal("hide");
+    
+  }
+
+  function removeActive(){
+    $(".tipval.active").removeClass('active');
+  }
+
+  bindPaymentButton();
+
+</script>
+</body> <!-- END modal -->
+
+</html>

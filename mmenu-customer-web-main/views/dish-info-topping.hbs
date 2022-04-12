@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Mmenu">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Mmenu">
+    <!-- <meta name="theme-color" content="#999999" class="next-head" />
+    <meta name="msapplication-TileColor" content="#999999" class="next-head" /> -->
+    <title>Mmenu</title>
+    <link rel="stylesheet" href="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/css/font-awesome.min.css">
+    <script src="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/js/jquery.min.js"></script>
+    <script src="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/js/popper.min.js"></script>
+    <script src="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/css/fonts.css?v=1.0.123">
+    <link rel="stylesheet" href="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/css/layout.css?v=1.0.123">
+    <link rel="stylesheet" href="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/css/controls.css?v=1.0.123">
+    <script>var shouldNotRegisterSession = {{shouldNotRegisterSession}}</script>
+    <script src="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/js/app.js?v=1.0.123"></script>
+  </head>
+  <body class="no-header">
+    <!-- app-header -->
+    <div id="panel-header">
+      <nav id="nav-header">
+        <div class="header-left">
+          <a id="btn-back" class="header-btn" href="index.html">
+            <img src="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/icons/back-white.svg">
+          </a>
+        </div>
+        <div class="header-center">
+          <span>Menu- Nhà hàng Mmenu - </span><span class="ten-ban">Bàn 1</span>
+        </div>
+        <div class="header-right">
+          <a id="btn-menu-main" class="header-btn" href="#">
+            <img src="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/icons/menu-white.svg">
+          </a>
+        </div>
+      </nav>
+    </div>
+
+    <!-- app-main -->
+    <div id="app-main" style="background-color:#fff;padding-bottom:0;margin-left:-15px;margin-right:-15px;">
+      <div class="dish-info">
+        <div class="img-slider">
+          <div class="imgs">
+            <img class="active" src="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/images/dish-info-slide-images-02/01.jpg">
+            <img src="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/images/dish-info-slide-images-02/02.jpg">
+            <img src="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/images/dish-info-slide-images-02/03.jpg">
+            <img src="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/images/dish-info-slide-images-02/04.jpg">
+            <img src="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/images/dish-info-slide-images-02/05.jpg">
+            <img src="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/images/dish-info-slide-images-02/06.jpg">
+            <img src="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/images/dish-info-slide-images-02/07.jpg">
+          </div>
+          <div class="slider-navs">
+            <a class="slider-nav active" href="#1"></a>
+            <a class="slider-nav" href="#2"></a>
+            <a class="slider-nav" href="#3"></a>
+            <a class="slider-nav" href="#4"></a>
+            <a class="slider-nav" href="#5"></a>
+            <a class="slider-nav" href="#6"></a>
+            <a class="slider-nav" href="#7"></a>
+          </div>
+        </div>
+        <div class="title">Teppan noodle 120g</div>
+        <div class="amounts">
+          <div class="prices">
+            <span class="price">50.000đ</span>
+            <span class="price-old">55.000đ</span>
+          </div>
+          <div class="dish-amount">
+            <img class="minus" src="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/icons/minus-gray.svg"><span class="amount">1</span><img class="plus" src="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/icons/plus-gray.svg">
+          </div>
+        </div>
+        <div class="dish-content">Teppanyaki noodle is a dish that come from Japan Teppan means iron plate and yaki means grilled or griddled. So, it’s food cooked on a hot plate. Give it a try ;)</div>
+
+        <!-- Chọn size -->
+        <div class="dish-options">
+          <div class="option-title">Chọn size</div>
+          <div class="option-items">
+            <div class="option-item">
+              <label class="mycheckbox"><input type="checkbox"><span class="checkmark"></span></label>
+              <span class="text">Size M</span>
+            </div>
+            <div class="option-item">
+              <label class="mycheckbox"><input type="checkbox"><span class="checkmark"></span></label>
+              <span class="text">Size L</span>
+            </div>
+          </div>
+        </div> <!-- END Chọn size -->
+
+        <!-- Topping -->
+        <div class="dish-options">
+          <div class="option-title">Topping</div>
+          <div class="option-items">
+            <div class="option-item">
+              <label class="mycheckbox"><input type="checkbox"><span class="checkmark"></span></label>
+              <span class="text">Kem Cheese</span>
+            </div>
+            <div class="option-item">
+              <label class="mycheckbox"><input type="checkbox"><span class="checkmark"></span></label>
+              <span class="text">Kem macchiato</span>
+            </div>
+            <div class="option-item">
+              <label class="mycheckbox"><input type="checkbox"><span class="checkmark"></span></label>
+              <span class="text">Brown mix</span>
+            </div>
+            <div class="option-item">
+              <label class="mycheckbox"><input type="checkbox"><span class="checkmark"></span></label>
+              <span class="text">Thạch lô hội</span>
+            </div>
+            <div class="option-item">
+              <label class="mycheckbox"><input type="checkbox"><span class="checkmark"></span></label>
+              <span class="text">Trân châu đen</span>
+            </div>
+          </div>
+        </div> <!-- Topping -->
+
+        <div style="font-size: 18px;font-weight: 600;margin-top:12px;">Ghi chú cho cửa hàng</div>
+
+        <div class="dish-info-actions">
+          <div class="action-note">
+            <input type="text" placeholder="Ghi chú...">
+          </div>
+          <div class="action-button">
+            <button type="button" class="btn btn-danger btn-datmon">Thêm vào đặt món</button>
+          </div>
+        </div>
+      </div>
+    </div>
+     
+    <!-- ############## absolute controls ############## -->
+
+    <!-- main-sidenav -->
+    <div id="sidenav-right" class="sidenav">
+      <a href="#" class="closebtn"><img src="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/icons/close.svg"></a>
+      <div class="avatar"><img src="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/images/avatar.png"></div>
+      <div class="username">Mr. Duc Nguyen</div>
+      <hr style="margin-top:2px" />
+      <a class="menu-item" href="promotion.html"><img src="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/icons/khuyen-mai.svg" width="21px"> Khuyến mãi</a>
+      <a class="menu-item group" href="main.html"><img src="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/icons/thuc-don.svg" width="21px"> Thực đơn <img class="arrow" src="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/icons/arrow-left.svg"></a>
+      <div class="sub-menus">
+        <a class="menu-item" href="main.html">Món khai vị</a>
+        <a class="menu-item" href="main.html">Món chính</a>
+        <a class="menu-item" href="main.html">Món tráng miệng</a>
+        <a class="menu-item" href="main.html">Đồ uống</a>
+      </div>
+      <a class="menu-item" href="main.html"><img src="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/icons/lien-he.svg" width="22px"> Liên hệ</a>
+      <a id="side-nav-history" class="menu-item" href="#"><img src="https://s3.ap-southeast-1.amazonaws.com/cdndev.mmenu.io/test/public/icons/lich-su.svg" width="22px"> Lịch sử</a>
+    </div>
+
+    <!-- Modal Danh mục -->
+    <div class="modal fade" id="modal-danhmuc">
+      <div class="modal-dialog">
+        <div class="modal-content animate-bottom">
+          <div class="modal-body">
+            <a class="menu-item" href="#mon-goi-y">Món gợi ý</a>
+            <a class="menu-item" href="#khai-vi">Món khai vị</a>
+            <a class="menu-item" href="#mon-chinh">Món chính</a>
+            <a class="menu-item" href="#trang-mieng">Món tráng miệng</a>
+            <a class="menu-item" href="#rau-cu">Rau củ</a>
+            <a class="menu-item" href="#hai-san">Hải sản</a>
+            <a class="menu-item" href="#do-uong">Đồ uống</a>
+            <a class="menu-item" href="#topping">Topping</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,370 @@
+html, body {
+    background-color: #fff;
+    font-family: 'Montserrat';
+    overflow-x: hidden;
+    padding: 0px;
+}
+
+.flex {
+    display: flex;
+}
+span.right {
+    float: right;
+}
+#panel-header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    z-index: 2;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+
+#nav-header {
+    display: flex;
+    height: 52px; 
+    padding: 6px 6px 6px 10px;
+}
+#nav-header>.header-left {
+    width: 46px;
+}
+#nav-header>.header-center {
+    width: calc( 100% - 46px - 90px );
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    margin: auto;
+    text-align: center;
+}
+#nav-header>.header-right {
+    display: flex;
+    width: 90px;
+    padding-left: 6px;
+    padding-right: 3px;
+}
+
+.header-btn>img {
+    height: 24px;
+}
+
+#btn-back {
+    width: 40px;
+    height: 40px;
+    padding-left: 10px;
+    padding-top: 8px;
+    display: inline-block;
+    color: #000;
+    cursor: pointer;
+}
+
+#btn-menu-main {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    padding-left: 10px;
+    padding-top: 8px;
+    display: inline-block;
+    color: #000;
+    cursor: pointer;
+}
+#btn-menu-main img {
+    height: 17px;
+}
+
+#btn-book {
+    width: 40px;
+    height: 40px;
+    margin-right: 3px;
+    padding-left: 10px;
+    padding-top: 8px;
+    display: inline-block;
+    color: #000;
+    cursor: pointer;
+    position: relative;
+}
+#btn-book>.badge {
+    position: absolute;
+    font-size: 14px;
+    top: -1px;
+    right: -3px;
+    padding: 3px 6px;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+}
+ 
+.header-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.header-center .ten-ban {
+    color: red;
+}
+
+/* No Header */
+.no-header .header-btn:hover {
+    background-color: inherit;
+}
+.no-header #panel-header {
+    background-color:transparent;
+    z-index: 99;
+    border-bottom: 0;
+}
+.no-header #panel-header .header-center>* {
+    display: none;
+}
+.no-header .header-right {
+    width: 45px !important;
+    padding-left: 0 !important;
+}
+
+.no-header #main-filter {
+    display: none;
+}
+.no-header #app-main {
+    margin-top: 0px;
+    padding-top: 0;
+    box-shadow:none
+}
+
+/* Side Nav */
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 55px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+.sidenav .menu-item {
+    margin: 0 20px;
+    height: auto;
+    line-height: 45px;
+    margin-top: 20px;
+    padding: 0 14px;
+    background-color: #F7F7F7;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: #000;
+    display: block;
+    transition: 0.3s;
+    position: relative;
+}
+.sidenav .menu-item:active, .sidenav>.menu-item:focus, .sidenav>.menu-item:hover {
+    color: #555;
+}
+
+.sidenav .menu-item img {
+    margin-right: 10px;
+}
+.sidenav .menu-item img.arrow {
+    position: absolute;
+    right: 7px;
+    top: 12px;
+}
+
+.sidenav>.sub-menus{
+    display: none;
+    transition: 0.2s;
+}
+.sidenav>.sub-menus .menu-item{
+    margin-left: 46px;
+    margin-top: 10px;
+}
+.sidenav>.sub-menus.show{
+    display: block;
+}
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 55px;
+    font-size: 36px;
+    margin-top: -5px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.sidenav .username {
+    text-align: center;
+    font-size: 18px;
+    padding-top: 12px;
+}
+.sidenav .avatar {
+    text-align: center;
+}
+.sidenav .avatar img {
+    width: 100px;
+    background-color: #F3F3F3;
+    border-radius: 8px;
+}
+
+#main-filter {
+    padding: 21px 16px;
+    display: flex;
+}
+#main-filter .cb-danh-muc {
+    width: calc(50% - 8px);
+    height: 36px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background-color: #f1f1f1;
+    position: relative;
+    cursor: pointer;
+    padding-right: 27px;
+}
+#main-filter .cb-danh-muc.show {
+    background-color: #ccc;
+}
+#main-filter .cb-danh-muc .icon {
+    position: absolute;
+    right: 12px;
+    top: 14px;
+}
+
+#main-filter .tbx-search-from-date {
+    width: calc(50% - 8px);
+    height: 36px;
+    border-radius: 8px;
+    margin-left: 15px;
+    position: relative;
+}
+#main-filter .tbx-search-from-date input {
+    border: 0;
+    background-color: #f1f1f1;
+    width: 100%;
+    height: 36px;
+    border-radius: 8px;
+    padding-left: 12px;
+}
+#main-filter .tbx-search-from-date button {
+    position: absolute;
+    border: 0;
+    right: 6px;
+    top: 2px;
+}
+#main-filter .tbx-search-from-date button:focus {
+    outline: none;
+}
+#main-filter .tbx-search-from-date input:focus, #main-filter .tbx-search-from-date input:active {
+    outline: none;
+}
+
+#main-filter .tbx-search-to-date {
+    width: calc(50% - 8px);
+    height: 36px;
+    border-radius: 8px;
+    margin-left: 15px;
+    position: relative;
+}
+#main-filter .tbx-search-to-date input {
+    border: 0;
+    background-color: #f1f1f1;
+    width: 100%;
+    height: 36px;
+    border-radius: 8px;
+    padding-left: 12px;
+}
+#main-filter .tbx-search-to-date button {
+    position: absolute;
+    border: 0;
+    right: 6px;
+    top: 2px;
+}
+#main-filter .tbx-search-to-date button:focus {
+    outline: none;
+}
+#main-filter .tbx-search-to-date input:focus, #main-filter .tbx-search-to-date input:active {
+    outline: none;
+}
+
+#main-filter .tbx-search {
+    width: calc(50% - 8px);
+    height: 36px;
+    border-radius: 8px;
+    margin-left: 15px;
+    position: relative;
+}
+#main-filter .tbx-search input {
+    border: 0;
+    background-color: #f1f1f1;
+    width: 100%;
+    height: 36px;
+    border-radius: 8px;
+    padding-left: 12px;
+}
+#main-filter .tbx-search button {
+    position: absolute;
+    border: 0;
+    right: 6px;
+    top: 2px;
+}
+#main-filter .tbx-search button:focus {
+    outline: none;
+}
+#main-filter .tbx-search input:focus, #main-filter .tbx-search input:active {
+    outline: none;
+}
+
+#main-filter .order-history-search {
+    width: calc(100% - 8px);
+    height: 36px;
+    border-radius: 8px;
+    margin-left: 15px;
+    position: relative;
+}
+#main-filter .order-history-search input {
+    border: 0;
+    background-color: #f1f1f1;
+    width: 100%;
+    height: 36px;
+    border-radius: 8px;
+    padding-left: 12px;
+}
+#main-filter .order-history-search button {
+    position: absolute;
+    border: 0;
+    right: 6px;
+    top: 2px;
+}
+#main-filter .order-history-search button:focus {
+    outline: none;
+}
+#main-filter .order-history-search input:focus, #main-filter .order-history-search input:active {
+    outline: none;
+}
+
+#app-main {
+    margin-top: 130px;
+    padding: 15px 15px 80px 15px;
+    box-shadow: inset 0px 8px 10px -5px rgba(0, 0, 0, 0.1);
+}
+
+#bottom-actions {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 18px 20px;
+    width: 100%;
+    z-index: 99;
+    background-color: #fff;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.08);
+}
+#bottom-actions>.flex {
+    font-weight: 500;
+}

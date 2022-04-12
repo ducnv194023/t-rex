@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html style="background-color: #f8f8f8;">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Mmenu">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Mmenu">
+  <!-- <meta name="theme-color" content="#999999" class="next-head" />
+    <meta name="msapplication-TileColor" content="#999999" class="next-head" /> -->
+  <title>Mmenu</title>
+
+  <link rel="stylesheet"
+    href="/css/bootstrap.min.css">
+  <link rel="stylesheet"
+    href="/css/font-awesome.min.css">
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/popper.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <link rel="stylesheet"
+    href="/css/fonts.css?v=1.0.123">
+  <link rel="stylesheet"
+    href="/css/layout.css?v=1.0.123">
+  <link rel="stylesheet"
+    href="/css/controls.css?v=1.0.123">
+  <link rel="stylesheet"
+    href="/css/pages.css?v=1.0.124">
+  <script>var shouldNotRegisterSession = {{shouldNotRegisterSession}}</script>
+  <script src="/js/app.js?v=1.0.123"></script>
+</head>
+
+<body class="page-pay-method">
+  <!-- app-header -->
+  <div id="panel-header">
+    <nav id="nav-header">
+      <div class="header-left">
+        <a id="btn-back" class="header-btn" href="javascript:history.back()">
+          <img src="/icons/back.svg">
+        </a>
+      </div>
+      <div class="header-center">
+        <span>Thanh toán</span>
+      </div>
+      <div class="header-right">
+
+      </div>
+    </nav>
+  </div>
+
+  <!-- app-main -->
+  <div id="app-main">
+    <a class="pay-method-item" onClick="requestPayment()">
+      <img class="icon" src="/icons/pay_cash.svg">
+      <span class="name">Cash Payment</span>
+      <img class="arrow" src="/icons/arrow-right.svg"
+        height="18px">
+    </a>
+    <a class="pay-method-item" href="bill.html">
+      <img class="icon"
+        src="/icons/pay_Mastercard.svg">
+      <span class="name">Master Card</span>
+      <img class="arrow" src="/icons/arrow-right.svg"
+        height="18px">
+    </a>
+    <a class="pay-method-item" href="bill.html">
+      <img class="icon" src="/icons/pay_Zalo.svg">
+      <span class="name">Zalopay</span>
+      <img class="arrow" src="/icons/arrow-right.svg"
+        height="18px">
+    </a>
+    <a class="pay-method-item" href="bill.html">
+      <img class="icon" src="/icons/pay_momo.svg">
+      <span class="name">Momo</span>
+      <img class="arrow" src="/icons/arrow-right.svg"
+        height="18px">
+    </a>
+  </div>
+  <script>
+    function requestPayment(){
+      $.post('',
+        {
+          status: "payRequested",
+        },
+        function(data, status){
+          let pathArray = window.location.href.split('/');
+          pathArray.pop();
+          let newPathname = pathArray.join('/');
+          window.location.replace(newPathname+"/review");
+        }
+      );
+    }
+  </script>
+</body>
+
+</html>

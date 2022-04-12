@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Mmenu">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Mmenu">
+    <!-- <meta name="theme-color" content="#999999" class="next-head" />
+    <meta name="msapplication-TileColor" content="#999999" class="next-head" /> -->
+    <title>Mmenu</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/fonts.css?v=1.0.123">
+    <link rel="stylesheet" href="/css/layout.css?v=1.0.123">
+    <link rel="stylesheet" href="/css/controls.css?v=1.0.123">
+    <script>var shouldNotRegisterSession = {{shouldNotRegisterSession}}</script>
+    <script src="/js/app.js"></script>
+    
+  </head>
+  <body class="no-header">
+    <!-- app-header -->
+    <div id="panel-header">
+      <nav id="nav-header">
+        <div class="header-left">
+          <a id="btn-back" class="header-btn">
+            <img src="/icons/back-white.svg">
+          </a>
+        </div>
+        <div class="header-center">
+          <span>Menu- Nhà hàng Mmenu - </span><span class="ten-ban">Bàn 1</span>
+        </div>
+        <div class="header-right">
+          <a id="btn-menu-main" class="header-btn" href="#">
+            <img src="/icons/menu-white.svg">
+          </a>
+        </div>
+      </nav>
+    </div>
+
+    <!-- app-main -->
+    <div id="app-main" style="background-color:#fff;padding-bottom:0;margin-left:-15px;margin-right:-15px;">
+      
+      <div class="dish-info">
+        <div class="img-slider">
+          <div class="imgs">
+            {{#each dishData.images}}
+            <img class="active" src="{{#if this}}{{this}}{{else}}/icons/default_dish.svg{{/if}}">
+            {{/each}}
+          </div>
+          {{resetSerialNo}}
+          <div class="slider-navs">
+            {{#each dishData.images}}
+              <a class="slider-nav active" href="#{{serialNo}}"></a>
+            {{/each}}
+          </div>
+        </div>
+        <div class="title">{{dishData.name}}</div>
+        <div class="amounts">
+          <div class="prices">
+            <span class="price">{{dishData.price}}</span>
+            
+            {{#if dishData.oldPrice}}
+            <span class="price-old">{{dishData.oldPrice}}</span>
+            {{/if}}
+          </div>
+          <div class="dish-amount dish-amount-info">
+            <img class="minus" src="/icons/minus-gray.svg"><span class="amount">{{quantity}}</span><img class="plus" src="/icons/plus-gray.svg">
+          </div>
+        </div>
+        <div class="dish-content">{{dishData.description}}</div>
+        
+        <div class="dish-info-actions">
+          <div class="action-note">
+            <input type="text" class="input-note" placeholder="Ghi chú..." value="{{note}}">
+          </div>
+          <div class="action-button">
+            <button type="button" class="btn btn-danger btn-datmon btn-datmon-dish" dishId="{{dishData.id}}">Lưu</button>
+          </div>
+        </div>
+      </div>
+    </div>
+     
+    <!-- ############## absolute controls ############## -->
+
+    <!-- main-sidenav -->
+    <div id="sidenav-right" class="sidenav">
+      <a href="#" class="closebtn"><img src="/icons/close.svg"></a>
+      <div class="avatar"><img src="/images/avatar.png"></div>
+      <div class="username">Đăng nhập</div>
+      <hr style="margin-top:2px" />
+      <a class="menu-item" href="#"><img src="/icons/khuyen-mai.svg" width="21px"> Khuyến mãi</a>
+      <a class="menu-item" id="menu-side-nav" href="#"><img src="/icons/thuc-don.svg" width="21px"> Thực đơn</a>
+      <a class="menu-item" href="#"><img src="/icons/lien-he.svg" width="22px"> Liên hệ</a>
+      <a id="side-nav-history" id="side-nav-history" class="menu-item" href="#"><img src="/icons/lich-su.svg" width="22px"> Lịch sử</a>
+    </div>
+
+    <script>
+      $("#menu-side-nav").click(function(e){
+        e.preventDefault();
+        const pathArray = window.location.href.replace(/(dish).*/, '$1');
+        window.location.href = (pathArray.replace('dish', 'menus'));
+      });
+
+      $("#side-nav-history").click(function(e){
+        e.preventDefault();
+        const pathArray = window.location.href.replace(/(dish).*/, '$1');
+        window.location.href = (pathArray.replace('dish', 'history'));
+      });
+    </script>
+  </body>
+</html>
